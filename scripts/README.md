@@ -40,3 +40,9 @@ If you use this script with a Private Terraform Enterprise (PTFE) server that us
 ## Usage (deleteWorkspace.sh)
 ./deleteWorkspace.sh
 ./addAdminWorkspace.sh <workspace_name>
+
+## Notes
+You can remove all you work spaces with this for loop.
+```
+for ws in $(cat variables.tf | grep "," | cut -d, -f1); do ./deleteWorkspace.sh $ws; done
+```

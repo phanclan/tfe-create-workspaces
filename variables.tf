@@ -8,8 +8,7 @@ variable "organization" {}
 # If you want a workspace to start with "ADMIN" this will be removed
 # from the VCS repo name we attempt to connect to.
 variable "workspace_ids" {
-  type        = list(string)
-  description = "workspace names"
+  type = "list"
 
   default = [
     "ADMIN-tfe-policies-example",
