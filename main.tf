@@ -9,6 +9,7 @@ resource "tfe_workspace" "template" {
   organization      = "${var.organization}"
   terraform_version = "0.11.14"
   queue_all_runs    = false
+  auto_apply        = true
 
   vcs_repo {
     identifier     = "${var.repo_org}/${replace(element(var.workspace_ids, count.index), "/^(ADMIN-)?([0-9A-Za-z-]+)(_.*)?$/", "$2")}"
