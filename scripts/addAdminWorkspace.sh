@@ -51,13 +51,6 @@ fi
 # Setup GitHub, Config Dir, and Repo
   config_dir=$(echo $git_url | cut -d "/" -f 5 | cut -d "." -f 1)
   repository=$(echo $git_url | cut -d "/" -f 4,5 | cut -d "." -f 1)
-  echo "repository = ${repository}"
-  if [ -d "${config_dir}" ]; then
-    echo "removing existing directory ${config_dir}"
-    rm -fr ${config_dir}
-  fi
-  echo "Cloning from git URL ${git_url} into directory ${config_dir}"
-  git clone -q ${git_url}
 
 # Set workspace if provided as the second argument
 if [ ! -z "$2" ]; then
@@ -72,18 +65,6 @@ if [[ "${workspace}" != "${workspace% *}" ]] ; then
     echo "The workspace name cannot contain spaces."
     echo "Please pick a name without spaces and run again."
     exit
-fi
-
-# Override soft-mandatory policy checks that fail.
-# Set to "yes" or "no" in second argument passed to script.
-# If not specified, then this is set to "no"
-# If not cloning a git repository, set first argument to ""
-if [ ! -z $3 ]; then
-  override=$3
-  echo "override set to ${override} on command line."
-else
-  override="no"
-  echo "override not set on command line. Will not override."
 fi
 
 # build compressed tar file from configuration directory
@@ -202,8 +183,9 @@ fi
 # Build GCP Project Credentials
 if [[ ! -z ${GOOGLE_CREDENTIALS} && ! -z ${GOOGLE_PROJECT} ]]; then
   # GOOGLE_CREDENTIALS
-  sed -e "s/my-organization/$organization/" -e "s/my-workspace/${workspace}/" -e "s/my-key/gcp_credentials/" -e "s/my-value/${GOOGLE_CREDENTIALS}/" -e "s/my-category/terraform/" -e "s/my-hcl/false/" -e "s/my-sensitive/false/" < variable.template.json  > variable.json
-  echo "Adding GOOGLE_CREDENTIALS"
+  sed -e "s/my-organization/$organization/" -e "s/my-workspace/${workspace}/" -e "s/my-key/gcp_credentials/" -e "s/my-value/placeholder/" -e "s/my-category/terraform/" -e "s/my-hcl/false/" -e "s/my-sensitive/false/" < variable.template.json  > variable.json
+  echo -e "ACTION REQUIRED!!\n GOOGLE_CREDENTIAL Can't be added with this script.  Please update the placeholder in your workspace manually with..."
+  echo ${GOOGLE_CREDENTIALS} | tr -d '\n'
   upload_variable_result=$(curl -s --header "Authorization: Bearer $ATLAS_TOKEN" --header "Content-Type: application/vnd.api+json" --data @variable.json "https://${address}/api/v2/vars?filter%5Borganization%5D%5Bname%5D=${organization}&filter%5Bworkspace%5D%5Bname%5D=${workspace}")
 
   # GOOGLE_PROJECT
@@ -251,13 +233,13 @@ sentinel_policy_count=$(echo $sentinel_list_result | python -c "import sys, json
 echo "Number of Sentinel policies: " $sentinel_policy_count
 
 
-# DEBUG=true
+#DEBUG=true
 # cleanup
 if [[ ! ${DEBUG} ]]; then
-  find ./ -type d -maxdepth 1 -exec rm -rf {} \;
-  find ./ -name "*.tar.gz" -exec rm -rf {} \;
+  #find ./ -type d -maxdepth 1 -exec rm -rf {} \;
+  #find ./ -name "*.tar.gz" -exec rm -rf {} \;
   find ./ -name "*.json.backup" -exec rm -rf {} \;
-  rm run_destroy.json variable.json workspace.json
+  rm variable.json workspace.json
 fi
 
 echo "Finished"

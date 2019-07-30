@@ -3,7 +3,7 @@
   {
     "attributes": {
       "name":"workspace_name",
-      "terraform-version":"0.11.14",
+      "terraform-version":"0.12.05",
       "auto-apply":true,
         "vcs-repo": {
           "identifier":"org/workspace_repo",

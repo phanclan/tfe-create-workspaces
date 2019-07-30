@@ -9,7 +9,7 @@
 # You should edit these before running.
 address="app.terraform.io"
 organization="Patrick"
-workspace="workspace-from-api"
+workspace="ADMIN-TFE-Workspaces"
 
 # Set workspace if provided as the second argument
 if [ ! -z $1 ]; then
@@ -26,4 +26,4 @@ delete_workspace_result=$(curl --header "Authorization: Bearer $ATLAS_TOKEN" --h
 # Get the response from the TFE server
 # Note that successful deletion will give a null response.
 # Only errors result in data.
-echo "Response from TFE: ${delete_workspace_result}"
+echo -e "Looking for 'null' Response from TFE:\n Response: ${delete_workspace_result}"
