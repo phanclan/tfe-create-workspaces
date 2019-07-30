@@ -20,15 +20,16 @@ resource "tfe_team_access" "dev" {
 }
 
 resource "tfe_workspace" "template" {
-  count             = "${length(var.workspace_ids)}"
-  name              = "${element(var.workspace_ids, count.index)}"
+  for workspace in var.workspace_ids:
+  #count             = "${length(var.workspace_ids)}"
+  name              = workspace
   organization      = "${var.organization}"
   terraform_version = "0.11.14"
 
   vcs_repo {
-    identifier     = "${var.repo_org}/${replace(element(var.workspace_ids, count.index), "/^(ADMIN-)?([0-9A-Za-z-]+)(_.*)?$/", "$2")}"
+    identifier     = "${var.repo_org}/${replace(workspace), "/^(ADMIN-)?([0-9A-Za-z-]+)(_.*)?$/", "$2")}"
     oauth_token_id = "${var.oauth_token_id}"
-    branch         = "${lookup(var.workspace_branch, element(var.workspace_ids, count.index), "master")}"
+    branch         = "${lookup(var.workspace_branch, workspace, "master")}"
   }
 }
 
@@ -38,7 +39,7 @@ resource "tfe_variable" "gcp_project" {
   value        = "${var.gcp_project}"
   category     = "env"
   sensitive    = false
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/workspace"
   depends_on   = ["tfe_workspace.template"]
 }
 
