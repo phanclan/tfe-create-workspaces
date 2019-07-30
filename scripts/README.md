@@ -11,7 +11,23 @@ Three arguments can be provided on the command line when calling the script:
 
 The script does the following steps:
 1. Creates the workspace if it does not already exist.
-1. Adds Terraform and environment variables using your current shell env.  It assumes you have your AWS, GCP, or Azure ENV variables available in your current shell.
+1. Adds Terraform and environment variables using your current shell env.  It assumes you have the typical AWS, GCP, or Azure ENV variables available in your current shell.
+'''
+OAUTH_TOKEN_ID <setup github oauth and use id here>
+ATLAS_TOKEN <Enterprise TF Token>
+organization <your github org>
+ARM_CLIENT_ID
+ARM_SUBSCRIPTION_ID
+ARM_CLIENT_SECRET
+ARM_TENANT_ID
+GOOGLE_CREDENTIAL
+GOOGLE_PROJECT
+GOOGLE_REGION
+GOOGLE_ZONE
+AWS_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY
+AWS_DEFAULT_REGION
+'''
 
 Note that some json template files are included from which other json files are generated so that they can be passed to the curl commands.
 
