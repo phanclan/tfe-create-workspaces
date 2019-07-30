@@ -184,8 +184,9 @@ fi
 if [[ ! -z ${GOOGLE_CREDENTIALS} && ! -z ${GOOGLE_PROJECT} ]]; then
   # GOOGLE_CREDENTIALS
   sed -e "s/my-organization/$organization/" -e "s/my-workspace/${workspace}/" -e "s/my-key/gcp_credentials/" -e "s/my-value/placeholder/" -e "s/my-category/terraform/" -e "s/my-hcl/false/" -e "s/my-sensitive/false/" < variable.template.json  > variable.json
-  echo -e "ACTION REQUIRED!!\n GOOGLE_CREDENTIAL Can't be added with this script.  Please update the placeholder in your workspace manually with..."
+  echo -e "ACTION REQUIRED!! \nGOOGLE_CREDENTIAL Can't be added with this script. \nPlease update the placeholder in your workspace manually with the following \n\n"
   echo ${GOOGLE_CREDENTIALS} | tr -d '\n'
+  echo ""
   upload_variable_result=$(curl -s --header "Authorization: Bearer $ATLAS_TOKEN" --header "Content-Type: application/vnd.api+json" --data @variable.json "https://${address}/api/v2/vars?filter%5Borganization%5D%5Bname%5D=${organization}&filter%5Bworkspace%5D%5Bname%5D=${workspace}")
 
   # GOOGLE_PROJECT
