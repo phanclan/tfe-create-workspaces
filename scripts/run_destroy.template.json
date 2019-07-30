@@ -1,0 +1,18 @@
+{
+  "data": {
+    "attributes": {
+      "is-destroy":true,
+      "auto-apply":true,
+      "message":"Auto Destroy Run"
+    },
+    "type":"runs",
+    "relationships": {
+      "workspace": {
+        "data": {
+          "type": "workspaces",
+          "id": "workspace_id"
+        }
+      }
+    }
+  }
+}

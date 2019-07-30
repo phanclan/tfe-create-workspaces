@@ -1,0 +1,17 @@
+{
+  "data":
+  {
+    "attributes": {
+      "name":"workspace_name",
+      "terraform-version":"0.11.14",
+      "auto-apply":true,
+        "vcs-repo": {
+          "identifier":"org/workspace_repo",
+          "oauth-token-id":"oauth_token_id",
+          "branch": "",
+          "default-branch": true
+        }
+    },
+    "type":"workspaces"
+  }
+}
