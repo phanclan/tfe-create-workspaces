@@ -24,22 +24,23 @@ variable "workspace_ids" {
   ]
 }
 
-# Team Access
-variable "team_ops" {
+# Team "Operations" - Access
+variable "ops_access" {
   type = "map"
 
   default = {
-    myapp_master = "write"
+    read  = "myapp_dev, myapp_qa"
+    write = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod"
   }
 }
 
-variable "team_dev" {
+# Team "Development" - Access
+variable "dev_access" {
   type = "map"
 
   default = {
-    myapp_dev    = "write"
-    myapp_master = "read"
-    myapp_qa     = "read"
+    repo = "myapp_master,tf-aws-instance_prod,myapp_dev,tf-aws-instance_dev"
+    priv = "read,read,write,write"
   }
 }
 

@@ -28,12 +28,21 @@ resource "tfe_team" "dev" {
   organization = "${var.organization}"
 }
 
+resource "null_resource" "test" {
+  count = "${length(split(",", var.ops_access["repo"]))}"
+
+  triggers {
+    repo = "${element(split(",", var.ops_access["repo"]), count.index)}"
+    priv = "${element(split(",", var.ops_access["priv"]), count.index)}"
+  }
+}
+
 resource "tfe_team_access" "ops" {
-  count = "${length(var.team_ops)}"
+  count = "${length(split(",", var.ops_access["repo"]))}"
   #access = "read"
-  access       = "${lookup(var.team_ops, keys(var.team_ops)[count.index])}"
+  access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
   team_id      = "${tfe_team.ops.id}"
-  workspace_id = "${var.organization}/${lookup(var.team_ops, keys(var.team_ops)[count.index], "myapp_master")}"
+  workspace_id = "${var.organization}/${element(split(",", var.ops_access["repo"]), count.index)}}"
 }
 
 resource "tfe_variable" "gcp_project" {
