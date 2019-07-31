@@ -176,7 +176,7 @@ resource "tfe_variable" "tfe_token" {
 resource "tfe_variable" "name_prefix" {
   count        = "${length(var.workspace_ids)}"
   key          = "name_prefix"
-  value        = "${element(var.workspace_ids, count.index)}"
+  value        = "${element(var.workspace_ids, count.index)}-presto"
   category     = "terraform"
   sensitive    = false
   workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
