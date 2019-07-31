@@ -4,8 +4,6 @@ variable "oauth_token_id" {}
 
 variable "organization" {}
 
-variable "tcount" {}
-
 # Teams
 variable "teams" {
   type    = "list"
