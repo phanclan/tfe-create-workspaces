@@ -34,16 +34,33 @@ variable "ops_access" {
   }
 }
 
+resource "null_resource" "ops" {
+  count = "${length(split(",", var.ops_access["repo"]))}"
+
+  triggers {
+    repo = "${element(split(",", var.ops_access["repo"]), count.index)}"
+    priv = "${element(split(",", var.ops_access["priv"]), count.index)}"
+  }
+}
+
 # Team "Development" - Access
 variable "dev_access" {
   type = "map"
 
   default = {
-    repo = "myapp_master,tf-aws-instance_prod,myapp_dev,tf-aws-instance_dev"
-    priv = "read,read,write,write"
+    repo   = "myapp_master,tf-aws-instance_prod,myapp_dev,tf-aws-instance_dev"
+    access = "read,read,write,write"
   }
 }
 
+resource "null_resource" "dev" {
+  count = "${length(split(",", var.dev_access["repo"]))}"
+
+  triggers {
+    repo   = "${element(split(",", var.dev_access["repo"]), count.index)}"
+    access = "${element(split(",", var.dev_access["access"]), count.index)}"
+  }
+}
 # Default branch will be master unless defined below
 variable "workspace_branch" {
   type = "map"

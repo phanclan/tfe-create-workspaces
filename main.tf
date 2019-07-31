@@ -28,18 +28,14 @@ resource "tfe_team" "dev" {
   organization = "${var.organization}"
 }
 
-resource "tfe_team_member" "test" {
+resource "tfe_team_member" "ops" {
   team_id  = "${tfe_team.ops.id}"
   username = "ppresto-ops"
 }
 
-resource "null_resource" "test" {
-  count = "${length(split(",", var.ops_access["repo"]))}"
-
-  triggers {
-    repo = "${element(split(",", var.ops_access["repo"]), count.index)}"
-    priv = "${element(split(",", var.ops_access["priv"]), count.index)}"
-  }
+resource "tfe_team_member" "dev" {
+  team_id  = "${tfe_team.dev.id}"
+  username = "ppresto-dev"
 }
 
 resource "tfe_team_access" "ops" {
@@ -48,6 +44,14 @@ resource "tfe_team_access" "ops" {
   access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
   team_id      = "${tfe_team.ops.id}"
   workspace_id = "${var.organization}/${element(split(",", var.ops_access["repo"]), count.index)}"
+}
+
+resource "tfe_team_access" "dev" {
+  count = "${length(split(",", var.dev_access["repo"]))}"
+  #access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
+  access       = "${element(null_resource.dev.*.triggers.access, count.index)}"
+  team_id      = "${tfe_team.dev.id}"
+  workspace_id = "${var.organization}/${element(null_resource.dev.*.triggers.repo, count.index)}"
 }
 
 resource "tfe_variable" "gcp_project" {
