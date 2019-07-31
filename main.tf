@@ -26,7 +26,7 @@ resource "tfe_team" "teams" {
 
 resource "tfe_team_access" "test" {
   access       = "read"
-  team_id      = "${element(${tfe_team.teams.id}, count.index)}"
+  team_id      = "${element(tfe_team.teams.id, count.index)}"
   workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
 }
 
