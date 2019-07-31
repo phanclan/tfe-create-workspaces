@@ -18,18 +18,22 @@ resource "tfe_workspace" "template" {
   }
 }
 
-resource "tfe_team" "teams" {
-  count        = "${length(var.teams)}"
-  name         = "${element(var.teams, count.index)}"
+resource "tfe_team" "ops" {
+  name         = "Operations"
   organization = "${var.organization}"
 }
 
-resource "tfe_team_access" "read0" {
-  count = "${length(var.workspace_ids)}"
+resource "tfe_team" "dev" {
+  name         = "Development"
+  organization = "${var.organization}"
+}
+
+resource "tfe_team_access" "ops" {
+  count = "${length(var.team_ops)}"
   #access = "read"
-  access       = "read"
-  team_id      = "${tfe_team.teams.0.id}"
-  workspace_id = "${var.organization}/${lookup(var.read_access, element(var.workspace_ids, count.index), "myapp_master")}"
+  access       = "${lookup(var.team_ops, keys(var.team_ops)[count.index])}"
+  team_id      = "${tfe_team.ops.id}"
+  workspace_id = "${var.organization}/${lookup(var.team_ops, keys(var.team_ops)[count.index], "myapp_master")}"
 }
 
 resource "tfe_variable" "gcp_project" {
