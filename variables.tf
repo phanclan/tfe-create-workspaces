@@ -4,6 +4,8 @@ variable "oauth_token_id" {}
 
 variable "organization" {}
 
+variable "tcount" {}
+
 # Teams
 variable "teams" {
   type    = "list"
@@ -28,6 +30,25 @@ variable "workspace_ids" {
     "tf-aws-instance_prod",
     "tf-aws-instance_dev",
   ]
+}
+
+# Team Access
+variable "read_access" {
+  type = "map"
+
+  default = {
+    myapp_master = "Development"
+  }
+}
+
+variable "write_access" {
+  type = "map"
+
+  default = {
+    myapp_dev    = "Development"
+    myapp_master = "Operations"
+    myapp_qa     = "Operations"
+  }
 }
 
 # Default branch will be master unless defined below

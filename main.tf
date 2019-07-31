@@ -24,10 +24,20 @@ resource "tfe_team" "teams" {
   organization = "${var.organization}"
 }
 
-resource "tfe_team_access" "test" {
+resource "tfe_team_access" "read0" {
+  count        = "${length(var.workspace_ids)}"
+  #access = "read"
+  access = "${lookup(var.read_access, element(var.workspace_ids, count.index)) ? "read" :}"
+  #team_id      = "${lookup(tfe_team.teams.id, count.index)}"
+  team_id      = "${tfe_team.teams.0.id[count.index]}"
+  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+}
+
+resource "tfe_team_access" "read1" {
+  count        = "${length(var.workspace_ids)}"
   access = "read"
   #team_id      = "${lookup(tfe_team.teams.id, count.index)}"
-  team_id      = "${tfe_team.teams.*.id[count.index]}"
+  team_id      = "${tfe_team.teams.1.id[count.index]}"
   workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
 }
 
