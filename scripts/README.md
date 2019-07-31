@@ -49,16 +49,20 @@ If you use this script with a Private Terraform Enterprise (PTFE) server that us
 1. Export the Golang SSL_CERT_FILE and/or SSL_CERT_DIR environment variables. For instance, you could set the first of these to the same CA bundle used in option 1.
 1. Copy your certificate bundle to /etc/pki/ca-trust/source/anchors and then run `update-ca-trust extract`.
 
-## Usage (addAdminWorkspace.sh)
+## Usage (addAdminWorkspace.sh) will add a workspace you should link to this repo and use to manage additional workspaces.
 ./addAdminWorkspace.sh
 ./addAdminWorkspace.sh <gitURL> <workspace_name>
+
+## Usage (run_destroy.sh)  will run destroy plan to remove all provisioned infrastructure
+./run_destroy.sh <workspace_name>
 
 ## Usage (deleteWorkspace.sh)
 ./deleteWorkspace.sh
 ./addAdminWorkspace.sh <workspace_name>
 
 ## Notes
-You can remove all you work spaces with this for loop.
+remove all you workspaces and rebuild.
 ```
+for ws in $(cat variables.tf | grep "," | cut -d, -f1); do ./run_destroy.sh $ws; done
 for ws in $(cat variables.tf | grep "," | cut -d, -f1); do ./deleteWorkspace.sh $ws; done
 ```

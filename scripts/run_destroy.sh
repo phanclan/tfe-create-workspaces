@@ -8,8 +8,8 @@
 # Set organization and workspace to create.
 # You should edit these before running.
 address="app.terraform.io"
-organization="ppresto_ptfe"
-workspace="auto-tfc-workspace-sandbox"
+organization="Patrick"
+workspace="myapp_dev"
 sleep_duration=5
 # Set workspace if provided as the second argument
 if [ ! -z $1 ]; then
@@ -22,6 +22,7 @@ fi
 # Find the workspace
 echo "Checking to see if workspace exists"
 check_workspace_result=$(curl -s --header "Authorization: Bearer $ATLAS_TOKEN" --header "Content-Type: application/vnd.api+json" "https://${address}/api/v2/organizations/${organization}/workspaces/${workspace}")
+echo -e "curl -s --header \"Authorization: Bearer $ATLAS_TOKEN\" --header \"Content-Type: application/vnd.api+json\" \"https://${address}/api/v2/organizations/${organization}/workspaces/${workspace}\""
 
 if [[ $? != 0 ]]; then
   echo "Workspace not found"
@@ -35,6 +36,9 @@ sed "s/workspace_id/${workspace_id}/g" < run_destroy.template.json > run_destroy
 
 # Run Destroy plan
 run_destroy_plan=$(curl -s --header "Authorization: Bearer $ATLAS_TOKEN" --header "Content-Type: application/vnd.api+json" --data @run_destroy.json https://${address}/api/v2/runs)
+echo "Running destroy plan via API"
+echo "curl -s --header \"Authorization: Bearer $ATLAS_TOKEN\" --header \"Content-Type: application/vnd.api+json\" --data @run_destroy.json https://${address}/api/v2/runs"
+echo -e "\n\n OUTPUT:   \n ${run_destroy_plan}"
 
 # Parse run_result
 run_id=$(echo $run_destroy_plan | python -c "import sys, json; print(json.load(sys.stdin)['data']['id'])")
@@ -60,3 +64,9 @@ while [ $continue -ne 0 ]; do
     continue=0
   fi
 done
+
+#DEBUG=true
+# cleanup
+if [[ ! ${DEBUG} ]]; then
+  rm run_destroy.json
+fi
