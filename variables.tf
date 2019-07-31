@@ -4,6 +4,12 @@ variable "oauth_token_id" {}
 
 variable "organization" {}
 
+# Teams
+variable "teams" {
+  type    = "list"
+  default = ["Operations", "Development"]
+}
+
 # Workspace names will be used for the repo name when setting up VCS.
 # If you want a workspace to start with "ADMIN" this will be removed
 # from the VCS repo name we attempt to connect to.

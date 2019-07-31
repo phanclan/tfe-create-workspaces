@@ -18,6 +18,18 @@ resource "tfe_workspace" "template" {
   }
 }
 
+resource "tfe_team" "teams" {
+  count        = "${length(var.teams)}"
+  name         = "${element(var.teams, count.index)}"
+  organization = "${var.organization}"
+}
+
+resource "tfe_team_access" "test" {
+  access       = "read"
+  team_id      = "${element(${tfe_team.teams.id}, count.index)}"
+  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+}
+
 resource "tfe_variable" "gcp_project" {
   count        = "${length(var.workspace_ids)}"
   key          = "GOOGLE_PROJECT"
