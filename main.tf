@@ -28,6 +28,11 @@ resource "tfe_team" "dev" {
   organization = "${var.organization}"
 }
 
+resource "tfe_team_member" "test" {
+  team_id  = "${tfe_team.ops.id}"
+  username = "ppresto-ops"
+}
+
 resource "null_resource" "test" {
   count = "${length(split(",", var.ops_access["repo"]))}"
 
