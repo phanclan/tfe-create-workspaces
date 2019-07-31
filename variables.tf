@@ -29,8 +29,8 @@ variable "ops_access" {
   type = "map"
 
   default = {
-    repo = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa"
-    priv = "write,write,write,write,read,read"
+    repo   = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa"
+    access = "write,write,write,write,read,read"
   }
 }
 
@@ -38,8 +38,8 @@ resource "null_resource" "ops" {
   count = "${length(split(",", var.ops_access["repo"]))}"
 
   triggers {
-    repo = "${element(split(",", var.ops_access["repo"]), count.index)}"
-    priv = "${element(split(",", var.ops_access["priv"]), count.index)}"
+    repo   = "${element(split(",", var.ops_access["repo"]), count.index)}"
+    access = "${element(split(",", var.ops_access["access"]), count.index)}"
   }
 }
 

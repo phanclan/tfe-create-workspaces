@@ -28,10 +28,10 @@ resource "tfe_team" "dev" {
   organization = "${var.organization}"
 }
 
-#resource "tfe_team_member" "ops" {
-#  team_id  = "${tfe_team.ops.id}"
-#  username = "ppresto-ops"
-#}
+resource "tfe_team_member" "ops" {
+  team_id  = "${tfe_team.ops.id}"
+  username = "ppresto-ops"
+}
 
 resource "tfe_team_member" "dev" {
   team_id  = "${tfe_team.dev.id}"
@@ -40,10 +40,10 @@ resource "tfe_team_member" "dev" {
 
 resource "tfe_team_access" "ops" {
   count = "${length(split(",", var.ops_access["repo"]))}"
-  #access = "read"
-  access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
+  #access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
+  access       = "${element(null_resource.ops.*.triggers.access, count.index)}"
   team_id      = "${tfe_team.ops.id}"
-  workspace_id = "${var.organization}/${element(split(",", var.ops_access["repo"]), count.index)}"
+  workspace_id = "${var.organization}/${element(null_resource.ops.*.triggers.repo, count.index)}"
 }
 
 resource "tfe_team_access" "dev" {
