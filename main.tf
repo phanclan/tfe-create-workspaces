@@ -28,10 +28,10 @@ resource "tfe_team" "dev" {
   organization = "${var.organization}"
 }
 
-resource "tfe_team_member" "ops" {
-  team_id  = "${tfe_team.ops.id}"
-  username = "ppresto-ops"
-}
+#resource "tfe_team_member" "ops" {
+#  team_id  = "${tfe_team.ops.id}"
+#  username = "ppresto-ops"
+#}
 
 resource "tfe_team_member" "dev" {
   team_id  = "${tfe_team.dev.id}"
