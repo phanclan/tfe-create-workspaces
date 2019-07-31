@@ -29,8 +29,8 @@ variable "ops_access" {
   type = "map"
 
   default = {
-    read  = "myapp_dev, myapp_qa"
-    write = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod"
+    repo = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa"
+    priv = "write,write,write,write,read,read"
   }
 }
 
