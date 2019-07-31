@@ -47,7 +47,7 @@ resource "tfe_team_access" "ops" {
   #access = "read"
   access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
   team_id      = "${tfe_team.ops.id}"
-  workspace_id = "${var.organization}/${element(split(",", var.ops_access["repo"]), count.index)}}"
+  workspace_id = "${var.organization}/${element(split(",", var.ops_access["repo"]), count.index)}"
 }
 
 resource "tfe_variable" "gcp_project" {
