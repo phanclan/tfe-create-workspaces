@@ -49,7 +49,7 @@ variable "dev_access" {
 
   default = {
     repo   = "myapp_master,tf-aws-instance_prod,myapp_dev,tf-aws-instance_dev"
-    access = "read,read,write,write"
+    access = "read,read,read,write"
   }
 }
 
