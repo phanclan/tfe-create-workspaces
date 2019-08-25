@@ -184,10 +184,11 @@ resource "tfe_variable" "name_prefix" {
 }
 
 resource "tfe_notification_configuration" "alerts" {
+  count        = "${length(var.workspace_ids)}"
   name                      = "Sentinel Policy Violation"
   enabled                   = true
   destination_type          = "slack"
   triggers                  = ["run:needs attention", "run:errored"]
   url                       = "${var.slackurl}"
-  workspace_external_id     = "${tfe_workspace.test.external_id}"
+  workspace_external_id     = "${tfe_workspace.template.[count.index].external_id}"
 }
