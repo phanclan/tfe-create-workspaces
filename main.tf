@@ -185,7 +185,7 @@ resource "tfe_variable" "name_prefix" {
 
 resource "tfe_notification_configuration" "test" {
   count        = "${length(var.workspace_ids)}"
-  name                      = "Sentinel-Violation"
+  name                      = "Sentinel-Policy-Violation_${tfe_workspace.template.*.id[count.index]}"
   enabled                   = true
   destination_type          = "slack"
   triggers                  = ["run:needs_attention"]
