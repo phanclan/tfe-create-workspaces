@@ -183,13 +183,13 @@ resource "tfe_variable" "name_prefix" {
   depends_on   = ["tfe_workspace.template"]
 }
 
-resource "tfe_notification_configuration" "alerts" {
-  #count        = "${length(var.workspace_ids)}"
+resource "tfe_notification_configuration" "test" {
+  count        = "${length(var.workspace_ids)}"
   name                      = "Sentinel-Violation"
   enabled                   = true
-  destination_type          = "generic"
+  destination_type          = "slack"
   triggers                  = ["run:needs_attention"]
   url                       = "${var.slackurl}"
-  workspace_external_id     = "${tfe_workspace.template.2.external_id}"
+  workspace_external_id     = "${tfe_workspace.template.*.external_id[count.index]}"
   depends_on   = ["tfe_workspace.template"]
 }
