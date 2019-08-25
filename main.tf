@@ -164,7 +164,7 @@ resource "tfe_variable" "gcp_zone" {
 }
 
 resource "tfe_variable" "tfe_token" {
-  count        = "${length(var.workspace_ids)}"
+  #count        = "${length(var.workspace_ids)}"
   key          = "tfe_token"
   value        = "${var.tfe_token}"
   category     = "terraform"
