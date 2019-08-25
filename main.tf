@@ -191,4 +191,5 @@ resource "tfe_notification_configuration" "alerts" {
   triggers                  = ["run:needs_attention"]
   url                       = "${var.slackurl}"
   workspace_external_id     = "${tfe_workspace.template.*.external_id[count.index]}"
+  depends_on   = ["tfe_workspace.template"]
 }
