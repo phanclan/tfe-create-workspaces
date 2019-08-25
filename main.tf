@@ -169,7 +169,7 @@ resource "tfe_variable" "tfe_token" {
   value        = "${var.tfe_token}"
   category     = "terraform"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/ADMIN-tfe-policies-example"
   depends_on   = ["tfe_workspace.template"]
 }
 
@@ -184,7 +184,7 @@ resource "tfe_variable" "name_prefix" {
 }
 
 resource "tfe_notification_configuration" "alerts" {
-  name                      = "Policy Violation"
+  name                      = "Sentinel Policy Violation"
   enabled                   = true
   destination_type          = "slack"
   triggers                  = ["run:needs attention", "run:errored"]
