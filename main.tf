@@ -187,7 +187,7 @@ resource "tfe_notification_configuration" "alerts" {
   #count        = "${length(var.workspace_ids)}"
   name                      = "Sentinel-Violation"
   enabled                   = true
-  destination_type          = "slack"
+  destination_type          = "generic"
   triggers                  = ["run:needs_attention"]
   url                       = "${var.slackurl}"
   workspace_external_id     = "${tfe_workspace.template.2.external_id}"
