@@ -182,3 +182,12 @@ resource "tfe_variable" "name_prefix" {
   workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
+
+resource "tfe_notification_configuration" "alerts" {
+  name                      = "Policy Violation"
+  enabled                   = true
+  destination_type          = "slack"
+  triggers                  = ["run:needs attention", "run:errored"]
+  url                       = "${var.slackurl}"
+  workspace_external_id     = "${tfe_workspace.test.external_id}"
+}

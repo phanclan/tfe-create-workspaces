@@ -4,6 +4,9 @@ variable "oauth_token_id" {}
 
 variable "organization" {}
 
+variable "slackurl" {
+  default = "https://hooks.slack.com/services/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"
+}
 # Workspace names will be used for the repo name when setting up VCS.
 # If you want a workspace to start with "ADMIN" this will be removed
 # from the VCS repo name we attempt to connect to.
