@@ -24,6 +24,7 @@ variable "workspace_ids" {
     "tf-azure-instance",
     "tf-aws-instance_prod",
     "tf-aws-instance_dev",
+    "patspets_master",
   ]
 }
 
@@ -32,8 +33,8 @@ variable "ops_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa,tf-aws-instance_dev"
-    access = "write,write,write,write,read,read,read"
+    repo   = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa,tf-aws-instance_dev,patspets_master"
+    access = "write,write,write,write,read,read,read,write"
   }
 }
 
