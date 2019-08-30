@@ -194,3 +194,12 @@ resource "tfe_variable" "name_prefix" {
 #  workspace_external_id     = "${tfe_workspace.template.*.external_id[count.index]}"
 #  depends_on   = ["tfe_workspace.template"]
 #}
+
+resource "tfe_workspace" "cicd" {
+  name              = "patspets_dev"
+  organization      = "${var.organization}"
+  terraform_version = "0.11.14"
+  queue_all_runs    = false
+  auto_apply        = true
+  depends_on   = ["tfe_workspace.template"]
+}
