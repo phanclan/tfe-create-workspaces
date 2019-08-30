@@ -25,6 +25,7 @@ variable "workspace_ids" {
     "tf-aws-instance_prod",
     "tf-aws-instance_dev",
     "patspets_master",
+    "patspets_dev",
   ]
 }
 
@@ -33,8 +34,8 @@ variable "ops_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa,tf-aws-instance_dev,patspets_master"
-    access = "write,write,write,write,read,read,read,write"
+    repo   = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa,tf-aws-instance_dev,patspets_dev,patspets_master"
+    access = "write,write,write,write,read,read,read,read,write"
   }
 }
 
@@ -52,8 +53,8 @@ variable "dev_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,tf-aws-instance_prod,myapp_dev,tf-aws-instance_dev"
-    access = "read,read,read,write"
+    repo   = "myapp_master,tf-aws-instance_prod,myapp_dev,tf-aws-instance_dev,patspets_dev"
+    access = "read,read,read,write,write"
   }
 }
 
@@ -74,6 +75,7 @@ variable "workspace_branch" {
     myapp_dev              = "dev"
     tf-aws-ecs-fargate_dev = "dev"
     tf-aws-instance_dev    = "dev"
+    patspets_dev           = "dev"
   }
 }
 
