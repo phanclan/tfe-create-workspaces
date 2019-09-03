@@ -2,6 +2,13 @@ provider "tfe" {
   #version = "<= 0.7.0"
   token   = "${var.tfe_token}"
 }
+resource "tfe_workspace" "cicd-template" {
+  count             = "${length(var.cicd_workspace_ids)}"
+  name              = "${element(var.cicd_workspace_ids, count.index)}"
+  organization      = "${var.organization}"
+  terraform_version = "0.11.14"
+  auto_apply        = true
+}
 
 resource "tfe_workspace" "template" {
   count             = "${length(var.workspace_ids)}"
@@ -16,6 +23,7 @@ resource "tfe_workspace" "template" {
     oauth_token_id = "${var.oauth_token_id}"
     branch         = "${lookup(var.workspace_branch, element(var.workspace_ids, count.index), "master")}"
   }
+  depends_on   = ["tfe_workspace.cicd-template"]
 }
 
 resource "tfe_team" "ops" {
@@ -65,12 +73,12 @@ resource "tfe_variable" "gcp_project" {
 }
 
 resource "tfe_variable" "gcp_credentials" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids)}"
   key          = "GOOGLE_CREDENTIALS"
   value        = "${var.gcp_credentials}"
   category     = "env"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
