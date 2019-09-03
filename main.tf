@@ -63,12 +63,12 @@ resource "tfe_team_access" "dev" {
 }
 
 resource "tfe_variable" "gcp_project" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "GOOGLE_PROJECT"
   value        = "${var.gcp_project}"
   category     = "env"
   sensitive    = false
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
@@ -83,91 +83,91 @@ resource "tfe_variable" "gcp_credentials" {
 }
 
 resource "tfe_variable" "aws_secret_access_key" {
-  count        = "${length(var.workspace_ids)}"
+ count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "AWS_SECRET_ACCESS_KEY"
   value        = "${var.aws_secret_access_key}"
   category     = "env"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "aws_access_key_id" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "AWS_ACCESS_KEY_ID"
   value        = "${var.aws_access_key_id}"
   category     = "env"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "arm_subscription_id" {
-  count        = "${length(var.workspace_ids)}"
+ count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "ARM_SUBSCRIPTION_ID"
   value        = "${var.arm_subscription_id}"
   category     = "env"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "arm_client_secret" {
-  count        = "${length(var.workspace_ids)}"
+ count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "ARM_CLIENT_SECRET"
   value        = "${var.arm_client_secret}"
   category     = "env"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "arm_tenant_id" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "ARM_TENANT_ID"
   value        = "${var.arm_tenant_id}"
   category     = "env"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "arm_client_id" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "ARM_CLIENT_ID"
   value        = "${var.arm_client_id}"
   category     = "env"
   sensitive    = true
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "env_vars" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "CONFIRM_DESTROY"
   value        = "1"
   category     = "env"
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "gcp_region" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "GOOGLE_REGION"
   value        = "${var.gcp_region}"
   category     = "env"
   sensitive    = false
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 resource "tfe_variable" "gcp_zone" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "GOOGLE_ZONE"
   value        = "${var.gcp_zone}"
   category     = "env"
   sensitive    = false
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
@@ -182,18 +182,18 @@ resource "tfe_variable" "tfe_token" {
 }
 
 resource "tfe_variable" "name_prefix" {
-  count        = "${length(var.workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "name_prefix"
   value        = "${element(var.workspace_ids, count.index)}-presto"
   category     = "terraform"
   sensitive    = false
-  workspace_id = "${var.organization}/${element(var.workspace_ids, count.index)}"
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
 
 # ERROR: Resource Not Found
 #resource "tfe_notification_configuration" "test" {
-#  count        = "${length(var.workspace_ids)}"
+#  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
 #  name                      = "Sentinel-Policy-Violation"
 #  enabled                   = true
 #  destination_type          = "slack"
