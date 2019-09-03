@@ -73,7 +73,7 @@ resource "tfe_variable" "gcp_project" {
 }
 
 resource "tfe_variable" "gcp_credentials" {
-  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids)}"
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "GOOGLE_CREDENTIALS"
   value        = "${var.gcp_credentials}"
   category     = "env"
