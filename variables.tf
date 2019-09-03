@@ -29,6 +29,14 @@ variable "workspace_ids" {
   ]
 }
 
+variable "cicd_workspace_ids" {
+  type = "list"
+
+  default = [
+    "patspets_master",
+  ]
+}
+
 # Team "Operations" - Access
 variable "ops_access" {
   type = "map"
@@ -100,3 +108,4 @@ variable "arm_client_secret" {}
 variable "arm_tenant_id" {}
 
 variable "arm_client_id" {}
+
