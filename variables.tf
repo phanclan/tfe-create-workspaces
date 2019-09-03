@@ -24,7 +24,6 @@ variable "workspace_ids" {
     "tf-azure-instance",
     "tf-aws-instance_prod",
     "tf-aws-instance_dev",
-    "patspets_master",
     "patspets_dev",
   ]
 }
