@@ -107,7 +107,7 @@ resource "tfe_variable" "aws_default_region" {
   key          = "AWS_DEFAULT_REGION"
   value        = "${var.aws_default_region}"
   category     = "env"
-  sensitive    = true
+  sensitive    = false
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template"]
 }
