@@ -102,6 +102,16 @@ resource "tfe_variable" "aws_access_key_id" {
   depends_on   = ["tfe_workspace.template"]
 }
 
+resource "tfe_variable" "aws_default_region" {
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
+  key          = "AWS_DEFAULT_REGION"
+  value        = "${var.aws_default_region}"
+  category     = "env"
+  sensitive    = true
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
+  depends_on   = ["tfe_workspace.template"]
+}
+
 resource "tfe_variable" "arm_subscription_id" {
  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
   key          = "ARM_SUBSCRIPTION_ID"

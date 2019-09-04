@@ -97,6 +97,8 @@ variable "gcp_project" {}
 
 variable "gcp_credentials" {}
 
+variable "aws_default_region" {}
+
 variable "aws_secret_access_key" {}
 
 variable "aws_access_key_id" {}
