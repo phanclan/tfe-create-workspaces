@@ -1,0 +1,20 @@
+{
+  "data": {
+    "type":"vars",
+    "attributes": {
+      "key":"aws_default_region",
+      "value":"us-west-2",
+      "category":"terraform",
+      "hcl":false,
+      "sensitive":false
+    }
+  },
+  "filter": {
+    "organization": {
+      "username":"Patrick"
+    },
+    "workspace": {
+      "name":"ADMIN-TFE-Workspaces"
+    }
+  }
+}
