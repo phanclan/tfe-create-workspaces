@@ -18,23 +18,19 @@ variable "workspace_ids" {
     "myapp_master",
     "myapp_dev",
     "myapp_qa",
-    "tf-aws-ecs-fargate_master",
-    "tf-aws-ecs-fargate_dev",
-    "tf-google-instance",
-    "tf-azure-instance",
-    "tf-aws-instance_prod",
-    "tf-aws-instance_dev",
+    "tf-aws-ecs-fargate",
+    "tf-google-gce-instance",
+    "tf-azurerm-az-instance",
+    "tf-aws-ec2-instance",
+    "tf-aws-standard-network",
     "patspets_stage",
-    "tf-aws-aws-std-network",
   ]
 }
 
 variable "cicd_workspace_ids" {
   type = "list"
 
-  default = [
-    "patspets_master",
-  ]
+  default = []
 }
 
 # Team "Operations" - Access
@@ -42,8 +38,8 @@ variable "ops_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,tf-aws-ecs-fargate_master,tf-aws-ecs-fargate_dev,tf-aws-instance_prod,myapp_dev,myapp_qa,tf-aws-instance_dev,patspets_stage,patspets_master,tf-aws-aws-std-network"
-    access = "write,write,write,write,read,read,read,read,write,write"
+    repo   = "myapp_master,myapp_dev,myapp_qa"
+    access = "write,read,read"
   }
 }
 
@@ -61,8 +57,8 @@ variable "dev_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,tf-aws-instance_prod,myapp_dev,tf-aws-instance_dev,patspets_stage,tf-aws-aws-std-network"
-    access = "read,read,read,write,write,read"
+    repo   = "myapp_master,myapp_dev,myapp_qa"
+    access = "read,write,write"
   }
 }
 
@@ -81,8 +77,6 @@ variable "workspace_branch" {
   default = {
     myapp_qa               = "qa"
     myapp_dev              = "dev"
-    tf-aws-ecs-fargate_dev = "dev"
-    tf-aws-instance_dev    = "dev"
     patspets_stage          = "stage"
   }
 }
