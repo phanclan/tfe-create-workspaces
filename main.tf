@@ -23,7 +23,6 @@ resource "tfe_workspace" "template" {
     oauth_token_id = "${var.oauth_token_id}"
     branch         = "${lookup(var.workspace_branch, element(var.workspace_ids, count.index), "master")}"
   }
-  depends_on   = ["tfe_workspace.cicd-template"]
 }
 
 resource "tfe_team" "ops" {
@@ -69,7 +68,7 @@ resource "tfe_variable" "gcp_project" {
   category     = "env"
   sensitive    = false
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "gcp_credentials" {
@@ -79,7 +78,7 @@ resource "tfe_variable" "gcp_credentials" {
   category     = "env"
   sensitive    = true
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "aws_secret_access_key" {
@@ -89,7 +88,7 @@ resource "tfe_variable" "aws_secret_access_key" {
   category     = "env"
   sensitive    = true
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "aws_access_key_id" {
@@ -99,7 +98,7 @@ resource "tfe_variable" "aws_access_key_id" {
   category     = "env"
   sensitive    = true
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "aws_default_region" {
@@ -109,7 +108,7 @@ resource "tfe_variable" "aws_default_region" {
   category     = "env"
   sensitive    = false
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "arm_subscription_id" {
@@ -119,7 +118,7 @@ resource "tfe_variable" "arm_subscription_id" {
   category     = "env"
   sensitive    = true
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "arm_client_secret" {
@@ -129,7 +128,7 @@ resource "tfe_variable" "arm_client_secret" {
   category     = "env"
   sensitive    = true
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "arm_tenant_id" {
@@ -139,7 +138,7 @@ resource "tfe_variable" "arm_tenant_id" {
   category     = "env"
   sensitive    = true
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "arm_client_id" {
@@ -149,7 +148,7 @@ resource "tfe_variable" "arm_client_id" {
   category     = "env"
   sensitive    = true
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "env_vars" {
@@ -158,7 +157,7 @@ resource "tfe_variable" "env_vars" {
   value        = "1"
   category     = "env"
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "gcp_region" {
@@ -168,7 +167,7 @@ resource "tfe_variable" "gcp_region" {
   category     = "env"
   sensitive    = false
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "gcp_zone" {
@@ -178,7 +177,7 @@ resource "tfe_variable" "gcp_zone" {
   category     = "env"
   sensitive    = false
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "tfe_token" {
@@ -188,7 +187,7 @@ resource "tfe_variable" "tfe_token" {
   category     = "terraform"
   sensitive    = true
   workspace_id = "${var.organization}/ADMIN-tfe-policies-example"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "name_prefix" {
@@ -198,7 +197,7 @@ resource "tfe_variable" "name_prefix" {
   category     = "terraform"
   sensitive    = false
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template"]
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 # ERROR: Resource Not Found
@@ -210,5 +209,5 @@ resource "tfe_variable" "name_prefix" {
 #  triggers                  = ["run:needs_attention", "run:errored"]
 #  url                       = "${var.slackurl}"
 #  workspace_external_id     = "${tfe_workspace.template.*.external_id[count.index]}"
-#  depends_on   = ["tfe_workspace.template"]
+#  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 #}
