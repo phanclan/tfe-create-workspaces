@@ -24,7 +24,7 @@ fi
 
 cyan "Create .terraformrc file with your TFE credentials"
 p "cat <<- CONFIG > ./.terraformrc
-credentials "app.terraform.io" {
+credentials \"app.terraform.io\" {
   token = "xxxxxxx"
 }
 CONFIG"
