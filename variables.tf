@@ -30,7 +30,7 @@ variable "workspace_ids" {
 variable "cicd_workspace_ids" {
   type = "list"
 
-  default = []
+  default = ["cicd-patspets"]
 }
 
 # Team "Operations" - Access
