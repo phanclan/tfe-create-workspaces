@@ -29,14 +29,26 @@ resource "tfe_team" "ops" {
   name         = "Operations"
   organization = "${var.organization}"
 }
-
 resource "tfe_team" "dev" {
   name         = "Development"
+  organization = "${var.organization}"
+}
+resource "tfe_team" "net" {
+  name         = "Network"
+  organization = "${var.organization}"
+}
+resource "tfe_team" "sec" {
+  name         = "Security"
   organization = "${var.organization}"
 }
 
 resource "tfe_team_member" "ops" {
   team_id  = "${tfe_team.ops.id}"
+  username = "ppresto-ops"
+}
+
+resource "tfe_team_member" "net" {
+  team_id  = "${tfe_team.net.id}"
   username = "ppresto-ops"
 }
 
@@ -59,6 +71,14 @@ resource "tfe_team_access" "dev" {
   access       = "${element(null_resource.dev.*.triggers.access, count.index)}"
   team_id      = "${tfe_team.dev.id}"
   workspace_id = "${var.organization}/${element(null_resource.dev.*.triggers.repo, count.index)}"
+}
+
+resource "tfe_team_access" "net" {
+  count = "${length(split(",", var.ops_access["repo"]))}"
+  #access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
+  access       = "${element(null_resource.ops.*.triggers.access, count.index)}"
+  team_id      = "${tfe_team.net.id}"
+  workspace_id = "${var.organization}/${element(null_resource.ops.*.triggers.repo, count.index)}"
 }
 
 resource "tfe_variable" "gcp_project" {

@@ -38,8 +38,8 @@ variable "ops_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,myapp_dev,myapp_qa"
-    access = "write,read,read"
+    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network"
+    access = "write,read,read,write"
   }
 }
 
@@ -57,8 +57,8 @@ variable "dev_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,myapp_dev,myapp_qa"
-    access = "read,write,write"
+    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network"
+    access = "read,write,write,read"
   }
 }
 
