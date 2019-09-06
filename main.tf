@@ -74,11 +74,11 @@ resource "tfe_team_access" "dev" {
 }
 
 resource "tfe_team_access" "net" {
-  count = "${length(split(",", var.ops_access["repo"]))}"
-  #access       = "${element(split(",", var.ops_access["priv"]), count.index)}"
-  access       = "${element(null_resource.ops.*.triggers.access, count.index)}"
+  count = "${length(split(",", var.net_access["repo"]))}"
+  #access       = "${element(split(",", var.net_access["priv"]), count.index)}"
+  access       = "${element(null_resource.net.*.triggers.access, count.index)}"
   team_id      = "${tfe_team.net.id}"
-  workspace_id = "${var.organization}/${element(null_resource.ops.*.triggers.repo, count.index)}"
+  workspace_id = "${var.organization}/${element(null_resource.net.*.triggers.repo, count.index)}"
 }
 
 resource "tfe_variable" "gcp_project" {

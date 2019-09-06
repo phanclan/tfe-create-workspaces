@@ -39,7 +39,7 @@ variable "ops_access" {
 
   default = {
     repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network"
-    access = "write,read,read,write"
+    access = "write,read,read,read"
   }
 }
 
@@ -70,6 +70,26 @@ resource "null_resource" "dev" {
     access = "${element(split(",", var.dev_access["access"]), count.index)}"
   }
 }
+
+# Team "Network" - Access
+variable "net_access" {
+  type = "map"
+
+  default = {
+    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network"
+    access = "read,read,read,write"
+  }
+}
+
+resource "null_resource" "net" {
+  count = "${length(split(",", var.net_access["repo"]))}"
+
+  triggers {
+    repo   = "${element(split(",", var.net_access["repo"]), count.index)}"
+    access = "${element(split(",", var.net_access["access"]), count.index)}"
+  }
+}
+
 # Default branch will be master unless defined below
 variable "workspace_branch" {
   type = "map"
