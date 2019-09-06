@@ -223,7 +223,7 @@ resource "tfe_variable" "name_prefix" {
 # ERROR: Resource Not Found
 resource "tfe_notification_configuration" "policies" {
   count        = "${length(var.workspace_ids)}"
-  name                      = "Sentinel-Policy-Violation"
+  name                      = "Policy-Violation-${count.index}"
   enabled                   = true
   destination_type          = "slack"
   triggers                  = ["run:needs_attention"]
