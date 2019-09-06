@@ -219,15 +219,3 @@ resource "tfe_variable" "name_prefix" {
   workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
   depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
-
-# ERROR: Resource Not Found
-resource "tfe_notification_configuration" "policies" {
-  count        = "${length(var.workspace_ids)}"
-  name                      = "Policy-Violation-${count.index}"
-  enabled                   = true
-  destination_type          = "slack"
-  triggers                  = ["run:needs_attention"]
-  url                       = "${var.slackurl}"
-  workspace_external_id     = "${tfe_workspace.template.*.external_id[count.index]}"
-  depends_on   = ["tfe_workspace.template"]
-}
