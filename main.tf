@@ -17,7 +17,7 @@ resource "tfe_workspace" "template" {
   terraform_version = "0.11.14"
   queue_all_runs    = false
   auto_apply        = true
-  working_directory = "${lookup(var.working_directory),"${element(var.workspace_ids, count.index)}","."}"
+  working_directory = "${lookup(var.working_directory),element(var.workspace_ids, count.index),"."}"
 
   vcs_repo {
     identifier     = "${var.repo_org}/${replace(element(var.workspace_ids, count.index), "/^(ADMIN-)?([0-9A-Za-z-]+)(_.*)?$/", "$2")}"
