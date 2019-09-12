@@ -27,6 +27,17 @@ variable "workspace_ids" {
   ]
 }
 
+variable "cicd_workspace_ids" {
+  type = "list"
+
+  default = ["patspets_master"]
+}
+
+#
+### Workspace Customizations
+#
+
+# Repo working directory
 variable "working_directory" {
   type = "map"
   default = {
@@ -34,10 +45,15 @@ variable "working_directory" {
   }
 }
 
-variable "cicd_workspace_ids" {
-  type = "list"
+# Repo Branch if different from 'master'
+variable "workspace_branch" {
+  type = "map"
 
-  default = ["patspets_master"]
+  default = {
+    myapp_qa               = "qa"
+    myapp_dev              = "dev"
+    patspets_stage         = "stage"
+  }
 }
 
 # Team "Operations" - Access
@@ -94,17 +110,6 @@ resource "null_resource" "net" {
   triggers {
     repo   = "${element(split(",", var.net_access["repo"]), count.index)}"
     access = "${element(split(",", var.net_access["access"]), count.index)}"
-  }
-}
-
-# Default branch will be master unless defined below
-variable "workspace_branch" {
-  type = "map"
-
-  default = {
-    myapp_qa               = "qa"
-    myapp_dev              = "dev"
-    patspets_stage          = "stage"
   }
 }
 
