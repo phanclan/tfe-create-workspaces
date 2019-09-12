@@ -27,10 +27,10 @@ variable "workspace_ids" {
   ]
 }
 
-variable "patspets_stage" {
+variable "working_directory" {
   type = "map"
   default = {
-    working_directory = "tfe/"
+    patspets_stage = "tfe/"
   }
 }
 
