@@ -42,7 +42,7 @@ variable "working_directory" {
   type = "map"
   default = {
     patspets_stage = "tfe/"
-    tf-aws-ec2-instance = "examples/0.1.6-securitygroupid/"
+    tf-aws-ec2-instance = "examples/simple/"
   }
 }
 
