@@ -81,8 +81,8 @@ variable "dev_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network"
-    access = "read,write,write,read"
+    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network,patspets_stage,patspets_master"
+    access = "read,write,write,read,write,read"
   }
 }
 
