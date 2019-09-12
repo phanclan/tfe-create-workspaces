@@ -17,7 +17,8 @@ resource "tfe_workspace" "template" {
   terraform_version = "0.11.14"
   queue_all_runs    = false
   auto_apply        = true
-
+  working_directory = "${lookup(var.element(var.workspace_ids, count.index)), "working_directory", "."}"
+  
   vcs_repo {
     identifier     = "${var.repo_org}/${replace(element(var.workspace_ids, count.index), "/^(ADMIN-)?([0-9A-Za-z-]+)(_.*)?$/", "$2")}"
     oauth_token_id = "${var.oauth_token_id}"
@@ -200,6 +201,17 @@ resource "tfe_variable" "gcp_zone" {
   depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
+resource "tfe_variable" "name_prefix" {
+  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
+  key          = "name_prefix"
+  value        = "${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}-presto"
+  category     = "terraform"
+  sensitive    = false
+  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
+}
+
+# Special Workspace Configuration Requirements here...
 resource "tfe_variable" "tfe_token" {
   #count        = "${length(var.workspace_ids)}"
   key          = "tfe_token"
@@ -210,12 +222,3 @@ resource "tfe_variable" "tfe_token" {
   depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
-resource "tfe_variable" "name_prefix" {
-  count        = "${length(concat(var.workspace_ids,var.cicd_workspace_ids))}"
-  key          = "name_prefix"
-  value        = "${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}-presto"
-  category     = "terraform"
-  sensitive    = false
-  workspace_id = "${var.organization}/${element(concat(var.workspace_ids,var.cicd_workspace_ids), count.index)}"
-  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
-}

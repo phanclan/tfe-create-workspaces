@@ -27,6 +27,13 @@ variable "workspace_ids" {
   ]
 }
 
+variable "patspets_stage" {
+  type = "map"
+  default = {
+    working_directory = "tfe/"
+  }
+}
+
 variable "cicd_workspace_ids" {
   type = "list"
 
