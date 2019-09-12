@@ -64,6 +64,7 @@ resource "tfe_team_access" "ops" {
   access       = "${element(null_resource.ops.*.triggers.access, count.index)}"
   team_id      = "${tfe_team.ops.id}"
   workspace_id = "${var.organization}/${element(null_resource.ops.*.triggers.repo, count.index)}"
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_team_access" "dev" {
@@ -72,6 +73,7 @@ resource "tfe_team_access" "dev" {
   access       = "${element(null_resource.dev.*.triggers.access, count.index)}"
   team_id      = "${tfe_team.dev.id}"
   workspace_id = "${var.organization}/${element(null_resource.dev.*.triggers.repo, count.index)}"
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_team_access" "net" {
@@ -80,6 +82,7 @@ resource "tfe_team_access" "net" {
   access       = "${element(null_resource.net.*.triggers.access, count.index)}"
   team_id      = "${tfe_team.net.id}"
   workspace_id = "${var.organization}/${element(null_resource.net.*.triggers.repo, count.index)}"
+  depends_on   = ["tfe_workspace.template","tfe_workspace.cicd-template"]
 }
 
 resource "tfe_variable" "gcp_project" {
