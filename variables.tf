@@ -23,14 +23,14 @@ variable "workspace_ids" {
     "tf-azurerm-az-instance",
     "tf-aws-ec2-instance",
     "tf-aws-standard-network",
-    "patspets_stage",
+    "patspets_dev",
   ]
 }
 
 variable "cicd_workspace_ids" {
   type = "list"
 
-  default = ["patspets_master"]
+  default = ["patspets_stage", "patspets_master"]
 }
 
 #
@@ -41,7 +41,7 @@ variable "cicd_workspace_ids" {
 variable "working_directory" {
   type = "map"
   default = {
-    patspets_stage = "tfe/"
+    patspets_dev = "tfe/"
     tf-aws-ec2-instance = "examples/simple/"
   }
 }
@@ -53,7 +53,7 @@ variable "workspace_branch" {
   default = {
     myapp_qa               = "qa"
     myapp_dev              = "dev"
-    patspets_stage         = "stage"
+    patspets_dev           = "dev"
   }
 }
 
@@ -81,8 +81,8 @@ variable "dev_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network,patspets_stage,patspets_master"
-    access = "read,write,write,read,write,read"
+    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network,patspets_dev,patspets_stage,patspets_master"
+    access = "read,write,write,read,read,read,read"
   }
 }
 
@@ -100,7 +100,7 @@ variable "net_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network"
+    repo   = "tf-aws-standard-network"
     access = "read,read,read,write"
   }
 }
