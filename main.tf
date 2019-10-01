@@ -22,7 +22,7 @@ resource "tfe_workspace" "template" {
   vcs_repo {
     identifier     = "${var.repo_org}/${replace(element(var.workspace_ids, count.index), "/^(ADMIN-)?([0-9A-Za-z-]+)(_.*)?$/", "$2")}"
     oauth_token_id = "${var.oauth_token_id}"
-    branch         = "${lookup(var.workspace_branch, element(var.workspace_ids, count.index), ".")}"
+    branch         = "${lookup(var.workspace_branch,element(var.workspace_ids, count.index),".")}"
   }
 }
 
