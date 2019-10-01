@@ -77,7 +77,7 @@ variable "dev_access" {
 
   default = {
     repo   = "tf-aws-standard-network,patspets_dev,patspets_stage,patspets_master"
-    access = "rread,read,read,read"
+    access = "read,read,read,read"
   }
 }
 
