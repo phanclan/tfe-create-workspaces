@@ -15,9 +15,6 @@ variable "workspace_ids" {
 
   default = [
     "ADMIN-tfe-policies-example",
-    "myapp_master",
-    "myapp_dev",
-    "myapp_qa",
     "tf-aws-ecs-fargate",
     "tf-google-gce-instance",
     "tf-azurerm-az-instance",
@@ -51,8 +48,6 @@ variable "workspace_branch" {
   type = "map"
 
   default = {
-    myapp_qa               = "qa"
-    myapp_dev              = "dev"
     patspets_dev           = "dev"
   }
 }
@@ -62,8 +57,8 @@ variable "ops_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network"
-    access = "write,read,read,read"
+    repo   = "tf-aws-standard-network,patspets_stage,patspets_master"
+    access = "write,read,write"
   }
 }
 
@@ -81,8 +76,8 @@ variable "dev_access" {
   type = "map"
 
   default = {
-    repo   = "myapp_master,myapp_dev,myapp_qa,tf-aws-standard-network,patspets_dev,patspets_stage,patspets_master"
-    access = "read,write,write,read,read,read,read"
+    repo   = "tf-aws-standard-network,patspets_dev,patspets_stage,patspets_master"
+    access = "rread,read,read,read"
   }
 }
 
@@ -101,7 +96,7 @@ variable "net_access" {
 
   default = {
     repo   = "tf-aws-standard-network"
-    access = "read,read,read,write"
+    access = "write"
   }
 }
 
